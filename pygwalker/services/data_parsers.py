@@ -40,5 +40,4 @@ def _get_data_parser(df: DataFrame) -> BaseDataParser:
 
 
 def get_parser(df: DataFrame) -> BaseDataParser:
-    parser = _get_data_parser(df)(df)
-    return parser
+    return _get_data_parser(df)(df)

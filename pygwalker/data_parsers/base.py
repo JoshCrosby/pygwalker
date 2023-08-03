@@ -45,10 +45,7 @@ class BaseDataFrameDataParser(Generic[DataFrame], BaseDataParser):
         self.df = self._init_dataframe(df)
 
     def raw_fields(self, field_specs: Dict[str, FieldSpec]) -> List[Dict[str, str]]:
-        return [
-            self._infer_prop(col, field_specs)
-            for _, col in enumerate(self.df.columns)
-        ]
+        return [self._infer_prop(col, field_specs) for col in self.df.columns]
 
     def to_records(self) -> List[Dict[str, Any]]:
         """Convert DataFrame to a list of records"""

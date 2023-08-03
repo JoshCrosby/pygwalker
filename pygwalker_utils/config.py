@@ -68,7 +68,7 @@ def set_config(config: dict, save=False):
         user_config = {}
         try:
             with open(filename, 'r') as f:
-                user_config.update(json.load(f))
+                user_config |= json.load(f)
         except Exception as e:  # user config file not existed, create it.
             import logging
             logging.info(f"Cannot access user's config file {filename}. (creating it...)")
@@ -92,10 +92,7 @@ def reset_config(keys: list=None, save=False):
     if keys is None:
         set_config(DEFAULT_CONFIG, save=save)
     else:
-        config = {}
-        for k in keys:
-            if k in DEFAULT_CONFIG:
-                config[k] = DEFAULT_CONFIG[k]
+        config = {k: DEFAULT_CONFIG[k] for k in keys if k in DEFAULT_CONFIG}
         set_config(config, save=save)
         
 

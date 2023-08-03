@@ -43,5 +43,4 @@ def render_gwalker_html(gid: int, props: Dict) -> str:
     js = walker_template.render(gwalker={'id': gid, 'props': json.dumps(props, cls=DataFrameEncoder)})
     js = "var exports={}, module={};" + gwalker_script() + js
     template = jinja_env.get_template("index.html")
-    html = f"{template.render(gwalker={'id': gid, 'script': js})}"
-    return html
+    return f"{template.render(gwalker={'id': gid, 'script': js})}"
