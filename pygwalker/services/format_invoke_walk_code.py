@@ -61,13 +61,8 @@ def _find_walk_func_node(code: str) -> Optional['ast.Call']:
             if func_name == 'walk':
                 return cur_node
         for node_info in astor.iter_node(cur_node):
-            if isinstance(node_info[0], list):
-                nodes = node_info[0]
-            else:
-                nodes = [node_info[0]]
-
-            for children_node in nodes:
-                node_list.append(children_node)
+            nodes = node_info[0] if isinstance(node_info[0], list) else [node_info[0]]
+            node_list.extend(iter(nodes))
 
 
 def _private_astor_pretty_source(source: List[str]) -> str:
@@ -95,9 +90,7 @@ def _get_default_code() -> str:
 
 def get_formated_spec_params_code(code: str) -> str:
     call_func = _find_walk_func_node(code.strip())
-    if call_func is None:
-        return ''
-    return _repalce_spec_params_code(call_func)
+    return '' if call_func is None else _repalce_spec_params_code(call_func)
 
 
 def get_formated_spec_params_code_from_frame(frame: FrameType) -> str:
@@ -108,7 +101,4 @@ def get_formated_spec_params_code_from_frame(frame: FrameType) -> str:
     except Exception:
         return _get_default_code()
 
-    if source_invoke_code == '':
-        return _get_default_code()
-
-    return source_invoke_code
+    return _get_default_code() if source_invoke_code == '' else source_invoke_code

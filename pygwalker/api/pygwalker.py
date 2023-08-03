@@ -46,10 +46,7 @@ class PygWalker:
         store_chart_data: bool,
         **kwargs
     ):
-        if gid is None:
-            self.gid = GlobalVarManager.get_global_gid()
-        else:
-            self.gid = gid
+        self.gid = GlobalVarManager.get_global_gid() if gid is None else gid
         self.df = df
         self._init_data_source(df, field_specs)
         self.spec = spec
@@ -95,8 +92,7 @@ class PygWalker:
 
     def to_html_without_iframe(self) -> str:
         props = self._get_props()
-        html = render_gwalker_html(self.gid, props)
-        return html
+        return render_gwalker_html(self.gid, props)
 
     def display_on_streamlit(self):
         display_on_streamlit(self.to_html())

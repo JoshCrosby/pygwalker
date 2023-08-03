@@ -11,8 +11,7 @@ class GWalker:
         self.df = df
 
     def to_html(self, **kwargs):
-        html = to_html(self.df, self.gid, **kwargs)
-        return html
+        return to_html(self.df, self.gid, **kwargs)
 
     def walk(self, **kwargs):
         return walk(self.df, self.gid, **kwargs)

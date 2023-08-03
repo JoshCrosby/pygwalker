@@ -36,7 +36,7 @@ def fname_encode(fname: str) -> str:
     Returns:
         str
     """
-    return "GW_" + base36encode(fname)
+    return f"GW_{base36encode(fname)}"
 
 
 def fname_decode(encode_fname: str) -> str:

@@ -41,35 +41,31 @@ def render_preview_html(
     for image in chart_data.charts:
         image_list[image.row_index][image.col_index] = image
 
-    html = jinja_env.get_template("preview.html").render(
+    return jinja_env.get_template("preview.html").render(
         image_list=image_list,
         div_id=div_id,
         title=custom_title if custom_title is not None else chart_data.title,
         desc=desc,
     )
 
-    return html
-
 
 def render_preview_html_for_multi_charts(charts_map: Dict[str, ChartData], gid: str, preview_id: str) -> str:
-    tab_name = "tab-pyg-" + str(gid)
+    tab_name = f"tab-pyg-{gid}"
     items = []
     for chart_data in charts_map.values():
         div_id = f"{gid}-{chart_data.title}".replace(" ", "")
         chart_html = render_preview_html(chart_data, div_id, custom_title="")
-        items.append({
-            "tab_id": "tab-" + div_id,
-            "chart_title": chart_data.title,
-            "chart_html": chart_html
-        })
+        items.append(
+            {
+                "tab_id": f"tab-{div_id}",
+                "chart_title": chart_data.title,
+                "chart_html": chart_html,
+            }
+        )
 
-    html = jinja_env.get_template("preview_list.html").render(
-        tab_name=tab_name,
-        preview_id=preview_id,
-        items=items
+    return jinja_env.get_template("preview_list.html").render(
+        tab_name=tab_name, preview_id=preview_id, items=items
     )
-
-    return html
 
 
 class PreviewImageTool:

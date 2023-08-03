@@ -9,7 +9,4 @@ def check_convert() -> bool:
     if psutil.Process().parent() is None:
         return False
     cmd_list = psutil.Process().parent().cmdline()
-    for cmd in cmd_list:
-        if re.search(r"jupyter-nbconvert", cmd):
-            return True
-    return False
+    return any(re.search(r"jupyter-nbconvert", cmd) for cmd in cmd_list)

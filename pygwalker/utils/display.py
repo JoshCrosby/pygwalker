@@ -24,11 +24,7 @@ def display_html(
         *
         - slot_id(str): display with given id.
     """
-    if isinstance(html, str):
-        widget = HTML(html)
-    else:
-        widget = html
-
+    widget = HTML(html) if isinstance(html, str) else html
     if slot_id is None:
         display(widget)
     else:

@@ -28,7 +28,7 @@ def _send_upload_data_msg(gid: int, msg: Dict[str, Any], slot_id: str):
 
 
 def _rand_slot_id():
-    return __hash__ + '-' + rand_str(6)
+    return f'{__hash__}-{rand_str(6)}'
 
 
 class BatchUploadDatasToolOnJupyter:

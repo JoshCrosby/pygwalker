@@ -35,8 +35,7 @@ class HackerCommunication(BaseCommunication):
         wait_lock = self._get_request_lock(rid)
         wait_lock.acquire(False)
         self.send_msg_async(action, data, rid=rid)
-        wait_result = wait_lock.acquire(True, 15)
-        if wait_result:
+        if wait_result := wait_lock.acquire(True, 15):
             wait_lock.release()
             return self._buffer_map.pop(rid, {})
         else:
